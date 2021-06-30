@@ -7,6 +7,9 @@ public class User {
     private Integer id;
     private String name;
 
+    protected User() {
+    }
+
     private Date birthDate;
 
     public User(Integer id, String name, Date birthDate) {
