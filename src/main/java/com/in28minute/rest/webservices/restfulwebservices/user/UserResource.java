@@ -1,6 +1,8 @@
 package com.in28minute.rest.webservices.restfulwebservices.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +29,15 @@ public class UserResource {
     }
 
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id) {
+    public EntityModel<User> retrieveUser(@PathVariable int id) {
         User find = userDaoService.findOne(id);
-        if(find == null) {
+        if (find == null) {
             throw new UserNotFoundException(String.format("ID %s not found ", id));
         }
-        return find;
+        EntityModel<User> model = EntityModel.of(find);
+        WebMvcLinkBuilder webMvcLinkBuilder = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
+        model.add(webMvcLinkBuilder.withRel("all-users"));
+        return model;
     }
 
 
@@ -50,14 +55,14 @@ public class UserResource {
                 .buildAndExpand(savedUser.getId())
                 .toUri();
 
-        return ResponseEntity.created (uri).build();
+        return ResponseEntity.created(uri).build();
     }
 
 
     @DeleteMapping("/users/{id}")
     public User deleteUser(@PathVariable int id) {
         User find = userDaoService.deleteById(id);
-        if(find == null) {
+        if (find == null) {
             throw new UserNotFoundException(String.format("ID %s not found ", id));
         }
         return find;

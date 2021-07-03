@@ -30,6 +30,15 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+<!--        HATEOAS &#45;&#45; Hypermedia as the engine of application state-->
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+
+
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
