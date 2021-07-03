@@ -36,6 +36,7 @@
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
 
+<!--        Internationlization - i18N-->
 
 
 
