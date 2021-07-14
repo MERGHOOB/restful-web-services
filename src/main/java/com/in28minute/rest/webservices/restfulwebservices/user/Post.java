@@ -1,5 +1,7 @@
 package com.in28minute.rest.webservices.restfulwebservices.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,8 @@ public class Post {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JsonIgnore
+    private User user; // Donot want user details - if we want post -> user -> post and so on.
 
 
     public Post() {
