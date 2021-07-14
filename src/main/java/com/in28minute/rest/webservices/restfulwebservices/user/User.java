@@ -3,9 +3,11 @@ package com.in28minute.rest.webservices.restfulwebservices.user;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +17,9 @@ public class User {
     private Integer id;
     @Size(min = 2, message = "Name must have at least 2 characters")
     private String name;
+
+    @OneToMany(mappedBy = "user") // mapped by field name representing this in Post class
+    private List<Post> posts;
 
     protected User() {
     }
