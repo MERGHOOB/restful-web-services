@@ -82,4 +82,30 @@ public class UserJPAResource {
         }
         return userOptional.get().getPosts();
     }
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @PostMapping("/jpa/users/{id}/posts")
+    public ResponseEntity<Object> createUser(@PathVariable int id, @RequestBody Post post) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException(String.format("ID %s not found ", id));
+        }
+
+        User user = userOptional.get();
+
+        post.setUser(user);
+
+        postRepository.save(post);
+
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
 }
